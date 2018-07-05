@@ -16,6 +16,12 @@ import java.util.ArrayList;
  */
 
 class SongAdapter extends ArrayAdapter<Song> {
+
+    private static class ViewHolder {
+        private TextView authorTextView;
+        private TextView titleTextView;
+    }
+
     public SongAdapter(Activity context, ArrayList<Song> songs) {
         super(context, 0, songs);
     }
@@ -24,19 +30,25 @@ class SongAdapter extends ArrayAdapter<Song> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // Check if the existing view is being reused, otherwise inflate the view
+        ViewHolder holder;
+
         View listItemView = convertView;
         if(listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.library_list_item, parent, false);
+            holder = new ViewHolder();
+            holder.authorTextView = (TextView) listItemView.findViewById(R.id.author);
+            holder.titleTextView = (TextView) listItemView.findViewById(R.id.title);
+            listItemView.setTag(holder);
+        }
+        else {
+            holder = (ViewHolder) listItemView.getTag();
         }
 
         Song currentWord = getItem(position);
 
-        TextView authorTextView = (TextView) listItemView.findViewById(R.id.author);
-        authorTextView.setText(currentWord.getAuthor());
-
-        TextView titleTextView = (TextView) listItemView.findViewById(R.id.title);
-        titleTextView.setText(currentWord.getTitle());
+        holder.authorTextView.setText(currentWord.getAuthor());
+        holder.titleTextView.setText(currentWord.getTitle());
 
         return listItemView;
     }
