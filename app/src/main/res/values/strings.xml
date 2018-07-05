@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MusicStructureApp</string>
     <string name="library">Library</string>
+    <string name="main_activity">Main Activity</string>
 </resources>
